@@ -29,7 +29,7 @@ probability_model = tf.keras.Sequential([
 
 while True:
     try:
-        filename = input("what file to read")
+        filename = input("what file to read: ")
         img = cv.imread(filename)
         gr = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
         res = cv.resize(gr, (28,28), interpolation=cv.INTER_CUBIC)
@@ -41,5 +41,5 @@ while True:
         image = np.array([[f(x) for x in arr] for arr in res])
         
         print(np.argmax(probability_model.predict(np.array([image]))))
-    except:
-        pass
+    except Exception as e:
+        print(e)
