@@ -1,5 +1,6 @@
 import tensorflow as tf
 import cv2 as cv
+import numpy as np
 
 mnist = tf.keras.datasets.mnist
 
@@ -9,6 +10,8 @@ x_train, x_test = x_train / 255.0, x_test / 255.0
 model = tf.keras.models.Sequential([
   tf.keras.layers.Flatten(input_shape=(28, 28)),
   tf.keras.layers.Dense(128, activation='relu'),
+  tf.keras.layers.Dense(96, activation='relu'),
+  tf.keras.layers.Dense(96, activation='relu'),
   tf.keras.layers.Dropout(0.2),
   tf.keras.layers.Dense(10)
 ])
@@ -20,7 +23,7 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 
-model.fit(x_train, y_train, epochs=5)
+model.fit(x_train, y_train, epochs=100)
 
 probability_model = tf.keras.Sequential([
   model,
@@ -40,6 +43,13 @@ while True:
         
         image = np.array([[f(x) for x in arr] for arr in res])
         
-        print(np.argmax(probability_model.predict(np.array([image]))))
+        res = probability_model.predict(np.array([image]))[0]
+
+        out = {}
+        for number in range(10):
+            out[str(number)] = str( int(res[number] * 10000)/100 ) + "%"
+
+        for k,v in out.items():
+            print(f"{k}-> {v}")
     except Exception as e:
         print(e)
