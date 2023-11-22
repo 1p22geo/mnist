@@ -36,7 +36,7 @@ def index():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             # the file exists at <filename>
-            return str(md.predict(os.path.join(app.config['UPLOAD_FOLDER'], filename)))
+            return json.dumps(md.predict(os.path.join(app.config['UPLOAD_FOLDER'], filename)))
     if request.method == 'GET':
         with open("html/index.html", "r") as f:
             return f.read()
