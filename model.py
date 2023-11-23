@@ -4,7 +4,7 @@ import numpy as np
 import threading
 
 
-EPOCHS=1
+EPOCHS=10
 
 class Model():
     def __init__(self):
@@ -33,9 +33,13 @@ class Model():
         self.th.start()
 
     def train(self):
+        print("started training model, 60000 dataset items")
+        x = 0
         while True:
             self.model.fit(self.x_train, self.y_train, epochs=EPOCHS)
-
+            x += 10
+            print(f"{x} epochs done, continuing training")
+    
             
     def predict(self, filename):
         img = cv.imread(filename)
