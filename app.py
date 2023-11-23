@@ -11,6 +11,10 @@ ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+if not os.path.exists(UPLOAD_FOLDER):
+   os.makedirs(UPLOAD_FOLDER)
+
+
 print("Initializing model")
 print("Training model")
 md = Model()
